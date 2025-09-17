@@ -51,7 +51,7 @@ exports.loginUser = async (req, res) => {
 
   // Validating fields
   if (!email || !password) {
-    return res.status(400).json({ message: "Email and password are required" });
+    return res.status(400).json({ message: "All fields are required" });
   }
 
   try {
@@ -62,7 +62,7 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Compare password
+    // Compare password (method implemented in User model)
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -79,16 +79,3 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// Get logged-in user info
-exports.getUserInfo = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ message: "Error fetching user info", error: error.message });
-  }
-};

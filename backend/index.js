@@ -6,7 +6,8 @@ const cors = require("cors");
 app.use(express.json()); // Middleware to parse JSON body
 app.use(cors());
 
-require("dotenv").config();
+const dotenv = require("dotenv");
+dotenv.config();
 
 const db = require('./db/db'); //import db connection file
 
@@ -14,6 +15,13 @@ const db = require('./db/db'); //import db connection file
 app.get('/', (req, res) => {
   res.send('API is running fine.');
 });
+
+
+const authRoutes = require("./routes/authRoutes.js");
+app.use('/api/auth', authRoutes);
+
+const eventRoutes = require("./routes/eventRoutes.js");
+app.use('/api/event', eventRoutes);
 
 const port = process.env.PORT || 5001; //defining port
 
