@@ -37,8 +37,6 @@ http://localhost:3000
 # Technologies used and why?
 I built this app using the MERN stack — MongoDB for storing data because it’s flexible and easy to work with, Express.js and Node.js for the backend to handle requests and manage the server, and React.js for the frontend to create a fast, interactive user interface. I used Mongoose to define data models and make database operations easier, and JWT for secure authentication. For styling, I used CSS to make the app look clean and responsive.
 
-Got it! Here’s a **clean, combined list of all your API endpoints with HTTP methods**:
-
 ---
 
 # API Endpoints and HTTP methods
