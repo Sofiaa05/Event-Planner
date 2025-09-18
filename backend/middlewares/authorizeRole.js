@@ -5,6 +5,7 @@ exports.authorizeRole = (role) => {
       return res.status(401).json({ message: "Not authorized" });
     }
 
+    //validating admin role to access a particular route
     if (req.user.role !== role) {
       return res.status(403).json({ message: `Access denied for ${req.user.role}` });
     }

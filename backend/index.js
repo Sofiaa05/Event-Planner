@@ -23,6 +23,9 @@ app.use('/api/auth', authRoutes);
 const eventRoutes = require("./routes/eventRoutes.js");
 app.use('/api/event', eventRoutes);
 
+const rsvpRoutes = require('./routes/rsvpRoutes.js');
+app.use('/api/rsvp', rsvpRoutes);
+
 const port = process.env.PORT || 5001; //defining port
 
 //start server
