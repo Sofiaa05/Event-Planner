@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
   res.send('API is running fine.');
 });
 
-
 const authRoutes = require("./routes/authRoutes.js");
 app.use('/api/auth', authRoutes);
 

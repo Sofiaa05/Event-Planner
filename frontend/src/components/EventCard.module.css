@@ -1,26 +1,130 @@
 
-
 .card {
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #f7f7f7;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.adminButtons button, .viewDetailsButton {
-  margin-top: 10px;
-  margin-right: 5px;
-  padding: 5px 10px;
-  border-radius: 5px;
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.card h3 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.card p {
+  margin: 0.3rem 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* Admin section */
+.adminSection {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.adminButtons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.adminButtons button {
+  padding: 0.5rem 1rem;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
 }
 
-.adminButtons button:hover, .viewDetailsButton:hover {
-  opacity: 0.8;
-}
-
-.viewDetailsButton {
-  background-color: #28a745;
+.adminButtons button:first-child {
+  background: #007bff;
   color: white;
+}
+
+.adminButtons button:first-child:hover {
+  background: #0056b3;
+}
+
+.adminButtons button:last-child {
+  background: #dc3545;
+  color: white;
+}
+
+.adminButtons button:last-child:hover {
+  background: #a71d2a;
+}
+
+/* rsvp section */
+.rsvpSummary {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+
+.rsvpSummary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+}
+
+.rsvpSummary li {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.rsvpButtons {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.rsvpButtons button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f1f1f1;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.rsvpButtons button:hover {
+  background: #e0e0e0;
+}
+
+.active {
+  background: #28a745 !important;
+  color: white !important;
+  border-color: #28a745 !important;
+  font-weight: bold;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .card {
+    padding: 1rem;
+  }
+
+  .adminButtons,
+  .rsvpButtons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .adminButtons button,
+  .rsvpButtons button {
+    width: 100%;
+    text-align: center;
+  }
 }

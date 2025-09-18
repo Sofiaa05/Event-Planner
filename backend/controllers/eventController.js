@@ -4,6 +4,7 @@ update or delete events if needed
 User Functionality: View a list of upcoming events sorted by date, View event details on a separate page or modal. */
 
 const Event = require("../models/Event");
+const RSVP = require("../models/RSVP");
 
 // createa new event (Admin only functionality)
 exports.createEvent = async (req, res) => {
@@ -88,7 +89,11 @@ exports.deleteEvent = async (req, res) => {
       return res.status(404).json({ message: "Event not found" });
     }
 
+    //delete event
     await event.deleteOne();
+
+    //delete related RSVPs
+    await RSVP.deleteMany({ eventId: event._id });
 
     res.status(200).json({ message: "Event deleted successfully" });
   } catch (error) {

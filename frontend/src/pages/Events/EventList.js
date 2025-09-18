@@ -6,77 +6,134 @@ import styles from "./EventList.module.css";
 import { useNavigate } from "react-router-dom";
 
 const EventList = () => {
+  // state to store events fetched from backend
   const [events, setEvents] = useState([]);
+
+  // state to store any error messages
   const [error, setError] = useState("");
+
+  // State to show/hide the create event form (admin only)
   const [showForm, setShowForm] = useState(false);
 
-  const role = localStorage.getItem("role"); // admin or user
+  // get role and token from localStorage
+  const role = localStorage.getItem("role"); // "admin" or "user"
   const token = localStorage.getItem("token");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // to navigate programmatically
 
-  // Fetch events
+  // useEffect runs once after component mounts
+  // fetch events and rsvp ingo
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get(
+        // Fetch all events from backend
+        const eventsRes = await axios.get(
           "http://localhost:5001/api/event/getevents",
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        setEvents(res.data);
+
+        let eventsData = eventsRes.data;
+
+        if (role === "user") {
+          // ff logged in as a user, also fetch user's rsvp
+          const rsvpsRes = await axios.get(
+            "http://localhost:5001/api/rsvp/getrsvp",
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+
+          const rsvpsData = rsvpsRes.data;
+
+          // Combine events with user's RSVP status
+          eventsData = eventsData.map((event) => {
+            const userRsvp = rsvpsData.find(
+              (rsvp) => rsvp.eventId._id === event._id
+            );
+            return { ...event, userStatus: userRsvp ? userRsvp.status : null };
+          });
+        }
+
+        if (role === "admin") {
+          // If admin, fetch RSVP summary for each event
+          const summaries = await Promise.all(
+            eventsData.map((event) =>
+              axios
+                .get(`http://localhost:5001/api/rsvp/summary/${event._id}`, {
+                  headers: { Authorization: `Bearer ${token}` },
+                })
+                .then((res) => ({ eventId: event._id, summary: res.data.summary }))
+            )
+          );
+
+          // Merge RSVP summary into events
+          eventsData = eventsData.map((event) => {
+            const match = summaries.find((s) => s.eventId === event._id);
+            return { ...event, summary: match ? match.summary : null };
+          });
+        }
+
+        // Set events state
+        setEvents(eventsData);
       } catch (err) {
-        setError("Failed to fetch events.");
+        // If fetch fails, show error
+        setError("Failed to fetch events or RSVPs.");
       }
     };
-    fetchEvents();
-  }, [token]);
 
-  // Add new event (Admin)
+    fetchEvents();
+  }, [token, role]); // run again if token or role changes
+
+  // Add new event (for admin)
   const addEvent = (event) => {
-    setEvents([...events, event]);
-    setShowForm(false);
+    setEvents([...events, event]); // append new event to list
+    setShowForm(false); // hide form after adding
   };
 
-  // Delete event
+  // Delete event (admin only)
   const handleDelete = async (eventId) => {
     try {
       await axios.delete(`http://localhost:5001/api/event/delete/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      // Remove deleted event from UI
       setEvents(events.filter((e) => e._id !== eventId));
     } catch {
       alert("Failed to delete event");
     }
   };
 
-  // Edit event (redirect to edit page)
+  // Edit event (admin only)
   const handleEdit = (event) => {
-    navigate(`/admin/events/edit/${event._id}`);
+    navigate(`/admin/events/edit/${event._id}`); // go to edit page
   };
 
-  // Navigate to event details page (for users)
-  const handleViewDetails = (eventId) => {
-    navigate(`/event/${eventId}`);
-  };
-
-
-  //RSVP
+  // RSVP function for user
   const handleRsvp = async (eventId, status) => {
-  try {
-    await axios.post(
-      "http://localhost:5001/api/rsvp/create",
-      { eventId, status },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    alert(`RSVP "${status}" submitted successfully!`);
-  } catch (err) {
-    console.error(err);
-    alert("Failed to submit RSVP");
-  }
-};
+    try {
+      // Send RSVP request to backend
+      await axios.post(
+        "http://localhost:5001/api/rsvp/create",
+        { eventId, status },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Update UI immediately so user sees new status
+      setEvents((prevEvents) =>
+        prevEvents.map((e) =>
+          e._id === eventId ? { ...e, userStatus: status } : e
+        )
+      );
+
+      alert(`RSVP "${status}" submitted successfully!`);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to submit RSVP");
+    }
+  };
 
   return (
     <div className={styles.container}>
       <h2>{role === "admin" ? "Admin Event List" : "Upcoming Events"}</h2>
+      
+      {/* show error if any */}
       {error && <p className={styles.error}>{error}</p>}
 
       {/* Admin create event button */}
@@ -91,9 +148,10 @@ const EventList = () => {
         </div>
       )}
 
-      {/* Show create form if admin clicked */}
+      {/*show create event form if admin clicked */}
       {role === "admin" && showForm && <CreateEventForm addEvent={addEvent} />}
 
+      {/* Show events */}
       <div className={styles.eventGrid}>
         {events.length === 0 && !error && <p>No events available.</p>}
 
@@ -104,7 +162,6 @@ const EventList = () => {
             role={role}
             onEdit={role === "admin" ? handleEdit : null}
             onDelete={role === "admin" ? handleDelete : null}
-            // onViewDetails={handleViewDetails}
             onRsvp={role === "user" ? handleRsvp : null}
           />
         ))}

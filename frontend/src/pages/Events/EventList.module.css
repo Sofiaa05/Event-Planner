@@ -1,28 +1,80 @@
+
 .container {
-  padding: 20px;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Error message */
+.error {
+  color: #dc3545;
+  background: #ffe6e6;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
 }
 
 .createButtonWrapper {
-  margin: 10px 0;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .createButton {
-  padding: 8px 16px;
-  border-radius: 5px;
-  background-color: #007bff;
+  background: #007bff;
   color: white;
+  padding: 0.75rem 1.5rem;
   border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
+.createButton:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Event grid */
 .eventGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
 }
 
-.error {
-  color: red;
+/* Responsive design */
+@media (max-width: 992px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .eventGrid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .container h2 {
+    font-size: 1.25rem;
+  }
+
+  .eventGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .createButton {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
 }
