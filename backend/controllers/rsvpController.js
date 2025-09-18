@@ -25,6 +25,7 @@ exports.createRsvp = async (req, res) => {
 
     let rsvp = await RSVP.findOne({ userId: req.user._id, eventId });
 
+    //if rsvp already exists then update else create new
     if (rsvp) {
       // Update existing RSVP
       rsvp.status = status;
