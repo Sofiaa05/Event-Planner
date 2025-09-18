@@ -19,7 +19,7 @@ const EditEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`http://localhost:5001/api/event/${id}`, {
+        const res = await axios.get(`http://localhost:5001/api/event/getdetails/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = res.data;
@@ -49,8 +49,8 @@ const EditEvent = () => {
     if (location) updatedFields.location = location;
 
     try {
-      await axios.patch(
-        `http://localhost:5001/api/event/${id}`,
+      await axios.put(
+        `http://localhost:5001/api/event/update/${id}`,
         updatedFields,
         { headers: { Authorization: `Bearer ${token}` } }
       );

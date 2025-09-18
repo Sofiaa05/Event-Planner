@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import EventList from './pages/Events/EventList';
 import { UserProvider } from './context/UserContext';
 import EditEvent from './pages/Events/EditEvent';
+import EventDetails from './pages/Events/EventDetails';
 const App = () => {
   return (
     <UserProvider>
@@ -19,6 +20,7 @@ const App = () => {
            {/* User */}
             <Route path="/getEvents" element={<EventList />} />              {/* List all events */}
             <Route path="/admin/events/edit/:id" element={<EditEvent />} />
+            <Route path="/events/:id" element={<EventDetails />} />
           </Routes>
         </Router>
       </div>   

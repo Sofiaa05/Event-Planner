@@ -1,72 +1,83 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styles from "./CreateEventForm.module.css";
 
-const CreateEventForm = ({ addEvent, onCancel }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [location, setLocation] = useState("");
+const CreateEventForm = ({ addEvent }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    location: "",
+  });
 
-  const handleSubmit = (e) => {
+  const token = localStorage.getItem("token");
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newEvent = { title, description, date, startTime, endTime, location };
-    addEvent(newEvent);
-
-    setTitle("");
-    setDescription("");
-    setDate("");
-    setStartTime("");
-    setEndTime("");
-    setLocation("");
+    try {
+      const res = await axios.post(
+        "http://localhost:5001/api/event/create",
+        formData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      addEvent(res.data.event);
+    } catch (err) {
+      alert("Failed to create event");
+    }
   };
 
   return (
-    <form className={styles.createForm} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        name="title"
+        placeholder="Event Title"
+        value={formData.title}
+        onChange={handleChange}
         required
       />
       <textarea
+        name="description"
         placeholder="Description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        required
+        value={formData.description}
+        onChange={handleChange}
       />
       <input
         type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
+        name="date"
+        value={formData.date}
+        onChange={handleChange}
         required
       />
       <input
         type="time"
-        value={startTime}
-        onChange={(e) => setStartTime(e.target.value)}
+        name="startTime"
+        value={formData.startTime}
+        onChange={handleChange}
         required
       />
       <input
         type="time"
-        value={endTime}
-        onChange={(e) => setEndTime(e.target.value)}
+        name="endTime"
+        value={formData.endTime}
+        onChange={handleChange}
         required
       />
       <input
         type="text"
+        name="location"
         placeholder="Location"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
+        value={formData.location}
+        onChange={handleChange}
         required
       />
-      <div className={styles.buttonGroup}>
-        <button type="submit">Create Event</button>
-        <button type="button" onClick={onCancel}>Cancel</button>
-      </div>
+      <button type="submit">Create Event</button>
     </form>
   );
 };

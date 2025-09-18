@@ -1,117 +1,26 @@
+
+
 .card {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 20px;
-  transition: transform 0.2s ease;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card h3 {
-  margin: 0 0 10px;
-  font-size: 1.25rem;
-  color: #222;
-}
-
-.card p {
-  margin: 6px 0;
-  color: #555;
-  font-size: 0.95rem;
-}
-
-.adminButtons,
-.rsvpButtons {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
-
-button {
-  padding: 8px 14px;
+.adminButtons button, .viewDetailsButton {
+  margin-top: 10px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.3s ease;
 }
 
-/* Admin buttons */
-.adminButtons button:first-child {
-  background: #ffc107;
-  color: #222;
+.adminButtons button:hover, .viewDetailsButton:hover {
+  opacity: 0.8;
 }
 
-.adminButtons button:first-child:hover {
-  background: #e0a800;
-}
-
-.adminButtons button:last-child {
-  background: #dc3545;
-  color: #fff;
-}
-
-.adminButtons button:last-child:hover {
-  background: #b52a37;
-}
-
-/* RSVP buttons */
-.rsvpButtons button:nth-child(1) {
-  background: #28a745;
-  color: #fff;
-}
-
-.rsvpButtons button:nth-child(1):hover {
-  background: #1e7e34;
-}
-
-.rsvpButtons button:nth-child(2) {
-  background: #ffc107;
-  color: #222;
-}
-
-.rsvpButtons button:nth-child(2):hover {
-  background: #e0a800;
-}
-
-.rsvpButtons button:nth-child(3) {
-  background: #dc3545;
-  color: #fff;
-}
-
-.rsvpButtons button:nth-child(3):hover {
-  background: #b52a37;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .card {
-    padding: 15px;
-  }
-
-  .card h3 {
-    font-size: 1.1rem;
-  }
-
-  button {
-    flex: 1;
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .eventGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .card {
-    padding: 12px;
-  }
-
-  .card h3 {
-    font-size: 1rem;
-  }
+.viewDetailsButton {
+  background-color: #28a745;
+  color: white;
 }
