@@ -1,6 +1,13 @@
 # Event-Planner
 Event planner web application using MERN stack.
 
+# Demo Video
+
+https://github.com/user-attachments/assets/0094a408-ce50-49bf-871a-9f155234a15b
+
+
+
+
 # Project Setup and Installation
 1. Clone the repository
 ```bash
