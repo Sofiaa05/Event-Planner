@@ -12,7 +12,7 @@
 
 .editForm h2 {
   text-align: center;
-  color: #007bff;
+  color: #117279;
   margin-bottom: 15px;
 }
 
@@ -43,12 +43,12 @@
 }
 
 .buttonGroup button[type="submit"] {
-  background-color: #28a745;
+  background-color: #13828a;
   color: white;
 }
 
 .buttonGroup button[type="button"] {
-  background-color: #dc3545;
+  background-color: #ab2835;
   color: white;
 }
 

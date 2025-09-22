@@ -1,0 +1,36 @@
+/* Container for the navbar */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background-color: #179391; /* Dodger Blue */
+  color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styling */
+.title {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .logoutButton {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
+}

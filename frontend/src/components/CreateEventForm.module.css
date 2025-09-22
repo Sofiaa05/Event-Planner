@@ -4,16 +4,19 @@
   flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 .form input, .form textarea, .form button {
-  padding: 8px;
+  padding: 18px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
 .form button {
-  background-color: #007bff;
+  background-color: #117279;
   color: white;
   cursor: pointer;
+  
 }

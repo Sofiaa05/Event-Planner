@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./EditEvent.module.css";
+import { getDetails, updateEvent } from "../../api/api";
+import Navbar from "../../components/NavBar";
 
 const EditEvent = () => {
   const { id } = useParams();
@@ -19,10 +20,8 @@ const EditEvent = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const res = await axios.get(`http://localhost:5001/api/event/getdetails/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = res.data;
+        const data = await getDetails(id);
+
         setTitle(data.title || "");
         setDescription(data.description || "");
         setDate(data.date ? data.date.split("T")[0] : "");
@@ -33,6 +32,7 @@ const EditEvent = () => {
         console.error("Error fetching event:", err);
       }
     };
+
     fetchEvent();
   }, [id, token]);
 
@@ -49,11 +49,7 @@ const EditEvent = () => {
     if (location) updatedFields.location = location;
 
     try {
-      await axios.put(
-        `http://localhost:5001/api/event/update/${id}`,
-        updatedFields,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await updateEvent(id, updatedFields);
       alert("Event updated successfully!");
       navigate("/getEvents");
     } catch (err) {
@@ -63,6 +59,9 @@ const EditEvent = () => {
   };
 
   return (
+    <>
+      <Navbar />
+  
     <form className={styles.editForm} onSubmit={handleSubmit}>
       <h2>Edit Event</h2>
 
@@ -106,6 +105,7 @@ const EditEvent = () => {
         </button>
       </div>
     </form>
+  </>
   );
 };
 

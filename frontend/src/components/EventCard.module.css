@@ -1,6 +1,6 @@
 
 .card {
-  background: #fff;
+  background: #35bfad3f;
   border-radius: 12px;
   padding: 1.5rem;
   margin: 1rem 0;
@@ -47,26 +47,26 @@
 }
 
 .adminButtons button:first-child {
-  background: #007bff;
+  background:#117279;
   color: white;
 }
 
 .adminButtons button:first-child:hover {
-  background: #0056b3;
+  background: #0f6268;
 }
 
 .adminButtons button:last-child {
-  background: #dc3545;
+  background: #dc357b;
   color: white;
 }
 
 .adminButtons button:last-child:hover {
-  background: #a71d2a;
+  background: #bc2f6a;
 }
 
 /* rsvp section */
 .rsvpSummary {
-  background: #f8f9fa;
+  background: #ffedf7af;
   border-radius: 8px;
   padding: 0.75rem;
 }
@@ -104,7 +104,7 @@
 }
 
 .active {
-  background: #28a745 !important;
+  background: #2babaf !important;
   color: white !important;
   border-color: #28a745 !important;
   font-weight: bold;
