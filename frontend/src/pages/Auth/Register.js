@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Register.module.css";
+import Navbar from "../../components/NavBar";
 
 const Register = () => {
   const [name, setFullname] = useState("");
@@ -35,7 +36,7 @@ const Register = () => {
 
       // redirect based on role
       if (user.role === "admin") {
-        navigate("/admin/events");
+        navigate("/getEvents");
       } else {
         navigate("/getEvents");
       }
@@ -45,7 +46,9 @@ const Register = () => {
     }
   };
 
-  return (
+  return ( 
+    <>
+      <Navbar />
     <div className={styles.registerContainer}>
       <h2>Register</h2>
       {error && <div className={styles.error}>{error}</div>}
@@ -81,8 +84,14 @@ const Register = () => {
         </select>
 
         <button type="submit">Register</button>
+
+        <p>
+          Already a user? {" "}
+          <Link to={"/login"}>Login</Link>
+        </p>
       </form>
     </div>
+    </>
   );
 };
 
