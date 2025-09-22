@@ -2,6 +2,9 @@
 Event planner web application using MERN stack.
 
 
+https://github.com/user-attachments/assets/9370e3db-b89e-42b3-a2eb-e9726b40d0af
+
+
 
 # Project Setup and Installation
 1. Clone the repository
